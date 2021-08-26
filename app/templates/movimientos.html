@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <br>
-                <form action="/registrarMovimiento" method="GET">
+                <form action="/registrarMovimiento" method="POST">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Seleccionar Proceso:</label>
                         <select class="form-control" id="fecha" name="fecha">
@@ -42,10 +42,29 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Ingrese monto</label><br>
-                        <input type="text" id="monto" name="monto">
+                        <input  class="form-control" type="number" id="monto" name="monto">
                     </div>
                     <button type="submit" class="btn btn-info">Registrar</button>
+                    <a type="button" href="/" class="btn btn-success">Regresar</a>
                 </form><br>
+                {% if data.ingresado == '0' %}
+                <div class="alert alert-warning mt-1" role="alert">
+                    El emplado ya tiene ese movimiento registrado
+                  </div>
+                    
+                {% endif %}
+                {% if data.ingresado == '1'%}
+                <div class="alert alert-success mt-1" role="alert">
+                    El movimiento ha sido registrado con exito
+                  </div>
+                   
+                {% endif %}
+                {% if data.ingresado == '2'%}
+                <div class="alert alert-danger mt-1" role="alert">
+                    Ocurrio un error
+                  </div>
+                 
+                {% endif %}
             </div>
         </div>
     </div>
