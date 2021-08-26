@@ -8,7 +8,7 @@ app = Flask(__name__)
 PSQL_HOST = "localhost"
 PSQL_PORT = "5432"
 PSQL_USER = "postgres"
-PSQL_PASS = "1234"
+PSQL_PASS = "123"
 PSQL_DB = "Planilla"
 
 # Conexion
@@ -101,6 +101,22 @@ def detalle(idplanilla):
   connection.commit()
   cursor.close()
   return render_template('detaplanilla.html', data=data)
+  
+@app.route('/cuentacorriente')
+def cuentacorriente():
+  # data = {}
+  # try:
+  #   cursor = connection.cursor()
+  #   SQL = "select c.nombre, dp.monto, tc.descripcion, dp.idcuenta from detaplanilla dp inner join concepto c on dp.idconcepto=c.idconcepto inner join tipoconcepto tc on tc.idtipoconcepto=c.idtipoconcepto where idplanilla='"+idplanilla+"'"
+  #   cursor.execute(SQL)
+  #   detalle = cursor.fetchall()
+  #   print('Get values: ', detalle)
+  #   data['detalle'] = detalle
+  # except Exception as ex:
+  #   data['mensaje'] = 'error'
+  # connection.commit()
+  # cursor.close()
+  return render_template('cuentacorriente.html')  
   
 @app.route('/prestamo/<idcuenta>')
 def prestamo(idcuenta):
