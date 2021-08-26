@@ -134,7 +134,6 @@ def prestamo(idcuenta):
   cursor.close()
   return render_template('prestamo.html', data=data)
 
-<<<<<<< HEAD
 
 @app.route('/movimientos')
 def movimiento():
@@ -202,7 +201,6 @@ def registrarMovimiento():
   cursor.close()
   return render_template('index.html')
 
-=======
 @app.route('/guardarCta', methods=['POST'])
 def guardarCta():
   data = {}
@@ -236,7 +234,6 @@ def guardarCta():
   connection.commit()
   cursor.close()
   return render_template('cuentacorriente.html', data=data)
->>>>>>> 7c8d3d669c80fae8d5e5b0a199d97e5422378632
 
 
 
