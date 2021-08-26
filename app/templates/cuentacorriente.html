@@ -10,28 +10,48 @@
                 <div class="row">
                     <div class="col">
                         <p style="Color:#1A237E;font-size: 25px;font-weight:bold!important; margin-top:30px;">
-                            PROGRAMA PLANILLA
+                            AJUSTES DE CUENTA CORRIENTE
                         </p>
                     </div>
                 </div>
                 <br>
-                <form action="/planilla" method="GET">
+                <form action="/guardarCta" method="POST">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Seleccionar Trabajador:</label>
-                        <select class="form-control" id="fecha" name="fecha">
-                            <option value=""></option>
+                        <select class="form-control" id="idTrabajador" name="idTrabajador">
+                            {%for c in data.detalle%}
+                            <option value="{{c[0]}}">{{c[1]}}</option>
+                            {%endfor%}
                         </select>
                     </div>
                     <div class="form-group">
                       <label for="exampleFormControlInput1">Ingresar monto de Prestamo:</label>
-                      <input type="" class="form-control" id="id">
+                      <input type="number" class="form-control" name="monto" id="monto">
                     </div>
                     <div class="form-group">
                       <label for="exampleFormControlInput1">Ingresar número de Cuotas:</label>
-                      <input type="" class="form-control" id="idd">
+                      <input type="number" class="form-control" name="cuota" id="cuota">
                     </div>
                     <button type="submit" class="btn btn-info">Generar</button>
                 </form><br> 
+                {% if data.ingresado == '0' %}
+                <div class="alert alert-warning mt-1" role="alert">
+                    el empleado ya cuenta con una cuenta corriente
+                  </div>
+                    
+                {% endif %}
+                {% if data.ingresado == '1'%}
+                <div class="alert alert-success mt-1" role="alert">
+                    La cuenta corriente ha sido registrada con exito
+                  </div>
+                   
+                {% endif %}
+                {% if data.ingresado == '2'%}
+                <div class="alert alert-danger mt-1" role="alert">
+                    Ocurrio un error
+                  </div>
+                 
+                {% endif %}
             </div>
         </div>
     </div>
