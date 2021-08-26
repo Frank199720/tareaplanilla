@@ -1,0 +1,42 @@
+{% extends './layout.html' %}
+
+{%block title %}PLANILLA{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div id="container-main">
+                <p style="Color:#1A237E;font-size: 25px;font-weight:bold!important; margin-top:30px;">
+                    DETALLE PLANILLA
+                </p>
+                <table class="table table-sm" style="margin-top: 30px;">
+                    <thead>
+                        <tr style="Color:#34495E  ;font-size: 18px;font-weight:bold!important; background:#FFF9C4">
+                            <th scope="col">TIPO CONCEPTO</th>
+                            <th scope="col">CONCEPTO</th>
+                            <th scope="col">MONTO</th>
+                            <th scope="col">CUENTA CORRIENTE</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        {% for c in data.detalle %}
+                        <tr>
+                            <th scope="row" style="vertical-align:middle">{{c[2]}}</th>
+                            <td style="vertical-align:middle">{{c[0]}}</td>
+                            <td style="vertical-align:middle">{{c[1]}}</td>
+                            {% if c[3] %}
+                                <td style="vertical-align:middle"><a href="{{url_for('prestamo', idcuenta=c[3])}}" type="button" class="btn btn-primary">VER</a></td>
+                            {% else %}
+                                <td style="vertical-align:middle">No tiene</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

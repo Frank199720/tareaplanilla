@@ -1,0 +1,67 @@
+{% extends './layout.html' %}
+
+{%block title %}PLANILLA{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div id="container-main">
+                <div class="row">
+                    <div class="col">
+                        <p style="Color:#1A237E;font-size: 25px;font-weight:bold!important; margin-top:30px;">
+                            PROGRAMA PLANILLA
+                        </p>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-success">Configuración planilla</button>
+                    </div>
+                </div>
+                <br>
+                <form action="/planilla" method="GET">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Seleccionar Proceso:</label>
+                        <select class="form-control" id="fecha" name="fecha">
+                            {% for c in data.fechas %}
+                            <option value="{{c[2]}}">{{c[0] + " de " + c[1]}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-info">Consultar</button>
+                </form><br>
+
+                <form action="/calcular" method="GET">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Calcular planilla:</label>
+                        <select class="form-control" id="fecha2" name="fecha2">
+                            {% for c in data.fechas %}
+                            <option value="{{c[2]}}">{{c[0] + " de " + c[1]}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-info">Calcular</button>
+                </form>
+                
+                {% if data.calculado == '0' %}
+                <div class="alert alert-warning mt-1" role="alert">
+                    La plantilla ya fue registrada con anterioridad
+                  </div>
+                    
+                {% endif %}
+                {% if data.calculado == '1'%}
+                <div class="alert alert-success mt-1" role="alert">
+                    La plantilla registrada con exito
+                  </div>
+                   
+                {% endif %}
+                {% if data.calculado == '2'%}
+                <div class="alert alert-danger mt-1" role="alert">
+                    Ocurrio un error
+                  </div>
+                 
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends './layout.html' %}
+
+{%block title %}PLANILLA{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div id="container-main">
+                <p style="Color:#1A237E;font-size: 25px;font-weight:bold!important; margin-top:30px;">
+                    DETALLE PRESTAMO
+                </p>
+                <table class="table table-sm" style="margin-top: 30px;">
+                    <thead>
+                        <tr style="Color:#34495E  ;font-size: 18px;font-weight:bold!important; background:#FFF9C4">
+                            <th scope="col">PRESTAMO</th>
+                            <th scope="col">PROCESADO</th>
+                            <th scope="col">SALDO</th>
+                            <th scope="col">ESTADO</th>
+                            <th scope="col">CUOTAS TOTAL</th>
+                            <th scope="col">CUOTAS PAGADAS</th>
+                            <th scope="col">VALOR CUOTA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in data.prestamo %}
+                        <tr>
+                            <td style="vertical-align:middle">{{c[2]}}</td>
+                            <td style="vertical-align:middle">{{c[3]}}</td>
+                            <td style="vertical-align:middle">{{c[4]}}</td>
+                            <td style="vertical-align:middle">{{c[5]}}</td>
+                            <td style="vertical-align:middle">{{c[6]}}</td>
+                            <td style="vertical-align:middle">{{c[7]}}</td>
+                            <td style="vertical-align:middle">{{c[8]}}</td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends './layout.html' %}
+
+{%block title %}PLANILLA{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div id="container-main">
+                <p style="Color:#1A237E;font-size: 25px;font-weight:bold!important; margin-top:30px;">
+                    PROGRAMA PLANILLA
+                </p>
+                <table class="table table-sm" style="margin-top: 30px;">
+                    <thead>
+                        <tr style="Color:#34495E  ;font-size: 18px;font-weight:bold!important; background:#FFF9C4">
+                            <th scope="col">N°</th>
+                            <th scope="col">TRABAJADOR</th>
+                            <th scope="col">SUELDO BASICO</th>
+                            <th scope="col">AFP</th>
+                            <th scope="col">DIAS DE FALTA</th>
+                            <th scope="col">HORAS DE FALTA</th>
+                            <th scope="col">INGRESOS</th>
+                            <th scope="col">DESCUENTOS</th>
+                            <th scope="col">OPCION</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        {% set count = namespace(a=1) %}
+                        {% for c in data.planilla %}
+                        <tr>
+                            <th scope="row" style="vertical-align:middle">{{ count.a }}</th>
+                            <td style="vertical-align:middle">{{c[0]}}</td>
+                            <td style="vertical-align:middle">{{c[1]}}</td>
+                            <td style="vertical-align:middle">{{c[2]}}</td>
+                            <td style="vertical-align:middle">{{c[3]}}</td>
+                            <td style="vertical-align:middle">{{c[4]}}</td>
+                            <td style="vertical-align:middle">{{c[5]}}</td>
+                            <td style="vertical-align:middle">{{c[6]}}</td>
+                            <td style="vertical-align:middle"><a href="{{url_for('detalle', idplanilla=c[7])}}" type="button" class="btn btn-primary">VER</a></td>
+                        </tr>
+                            {% set count.a = count.a + 1 %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
