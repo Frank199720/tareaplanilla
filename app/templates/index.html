@@ -13,13 +13,13 @@
                             PROGRAMA PLANILLA
                         </p>
                     </div>
-                    <div class="col">
-                        <button class="btn btn-success m-1">Configuración cuenta corriente</button>
-                        <button class="btn btn-warning m-1">Configuración movimientos</button>
-                    </div>
                 </div>
                 <br>
                 <form action="/planilla" method="GET">
+                    <div class="form-group">
+                        <a type="button"  href= "/cuentacorriente"class="btn btn-secondary m-1">Configuración cuenta corriente</a>
+                        <a type="button"  href= "/movimientos" class="btn btn-warning m-1">Configuración movimientos</a>
+                    </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Seleccionar Proceso:</label>
                         <select class="form-control" id="fecha" name="fecha">

@@ -103,6 +103,21 @@ def detalle(idplanilla):
   cursor.close()
   return render_template('detaplanilla.html', data=data)
   
+@app.route('/cuentacorriente')
+def cuentacorriente():
+  data = {}
+  try:
+    cursor = connection.cursor()
+    SQL = "select idtrabajador,apellidos from trabajador where estado='1'"
+    cursor.execute(SQL)
+    detalle = cursor.fetchall()
+    data['detalle'] = detalle
+  except Exception as ex:
+    data['mensaje'] = 'error'
+  connection.commit()
+  cursor.close()
+  return render_template('cuentacorriente.html',data=data)  
+  
 @app.route('/prestamo/<idcuenta>')
 def prestamo(idcuenta):
   data = {}
@@ -119,6 +134,7 @@ def prestamo(idcuenta):
   cursor.close()
   return render_template('prestamo.html', data=data)
 
+<<<<<<< HEAD
 
 @app.route('/movimientos')
 def movimiento():
@@ -186,6 +202,41 @@ def registrarMovimiento():
   cursor.close()
   return render_template('index.html')
 
+=======
+@app.route('/guardarCta', methods=['POST'])
+def guardarCta():
+  data = {}
+  try:
+    cursor = connection.cursor()
+    monto = request.form['monto']
+    cuota = request.form['cuota']
+    idTrabajador = request.form['idTrabajador']
+    idfecha=idTrabajador.strip()
+    QUERY_AFTER= "SELECT * FROM cuentacorriente where idtrabajador = '"+idTrabajador+"'"
+    cursor.execute(QUERY_AFTER)
+    cuentas = cursor.fetchall()
+    SQL = "select idtrabajador,apellidos from trabajador where estado='1'"
+    cursor.execute(SQL)
+    trabajadores = cursor.fetchall()
+    data['detalle'] = trabajadores
+    if len(cuentas)>0:
+      data['ingresado']="0"
+    else:
+      
+      data['detalle'] = trabajadores
+      SQL = "select PA_INSERT_CUENTA_CORRIENTE('"+ idTrabajador+ "',"+monto+","+cuota+");"
+      cursor.execute(SQL)
+      print(idfecha)
+      data['ingresado'] = '1'
+    #return redirect('/detalle'+idfecha+'a')
+  except Exception as ex:
+    print(idfecha)
+    data['ingresado'] = '2'
+    raise ValueError(ex)
+  connection.commit()
+  cursor.close()
+  return render_template('cuentacorriente.html', data=data)
+>>>>>>> 7c8d3d669c80fae8d5e5b0a199d97e5422378632
 
 
 
