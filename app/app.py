@@ -8,8 +8,9 @@ app = Flask(__name__)
 PSQL_HOST = "localhost"
 PSQL_PORT = "5432"
 PSQL_USER = "postgres"
-PSQL_PASS = "1234"
+PSQL_PASS = "juarezkj1998"
 PSQL_DB = "Planilla"
+
 
 # Conexion
 connection_address = """
@@ -117,6 +118,76 @@ def prestamo(idcuenta):
   connection.commit()
   cursor.close()
   return render_template('prestamo.html', data=data)
+
+
+@app.route('/movimientos')
+def movimiento():
+  data = {}
+  try:
+    cursor = connection.cursor()
+    SQL = "select case mes when '1' then 'Enero' when '2' then 'Febrero' when '3' then 'Marzo' when '4' then 'Abril' when '5' then 'Mayo' when '6' then 'Junio'	when '7' then 'Julio'	when '8' then 'Agosto' when '9' then 'Setiembre' when '10' then 'Octubre'	when '11' then 'Noviembre' when '12' then 'Diciembre'	end, anual, idmes	from mesproceso"
+    cursor.execute(SQL)
+    fechas = cursor.fetchall()
+    data['fechas'] = fechas
+
+    SQL = "select idtrabajador,apellidos,nombres  from trabajador where estado='1'"
+    cursor.execute(SQL)
+    trabajadores = cursor.fetchall()
+    data['trabajadores'] = trabajadores
+
+    SQL = "select idconcepto, nombre from concepto where idconcepto='500' or idconcepto='910' or idconcepto='920' or idconcepto='930' or idconcepto='940'"
+    cursor.execute(SQL)
+    trabajadores = cursor.fetchall()
+    data['conceptos'] = trabajadores
+    
+  except Exception as ex:
+    data['mensaje'] = 'error'
+  connection.commit()
+  cursor.close()
+  return render_template('movimientos.html',data=data)
+
+
+@app.route('/registrarMovimiento', methods=['GET'])
+def registrarMovimiento():
+  data = {}
+  try:
+    cursor = connection.cursor()
+    idfecha = request.args.get('fecha') 
+    idfecha=idfecha.strip()
+    idtrabajador = request.args.get('trabajador') 
+    idtrabajador=idtrabajador.strip()
+    idconcepto = request.args.get('concepto') 
+    idconcepto=idconcepto.strip()
+    monto=request.args.get('concepto')
+    monto=monto.strip() 
+    SQL = "select PA_INSERT_MOVIMIENTO_MES('"+ idtrabajador + "','"+idfecha+"','"+idconcepto+"','"+monto+"');"
+    cursor.execute(SQL)
+    # QUERY_AFTER= "SELECT * FROM Planilla where idmes = '"+idfecha+"'"
+    # cursor.execute(QUERY_AFTER)
+    # planilla = cursor.fetchall()
+    # SQL = "select case mes when '1' then 'Enero' when '2' then 'Febrero' when '3' then 'Marzo' when '4' then 'Abril' when '5' then 'Mayo' when '6' then 'Junio'	when '7' then 'Julio'	when '8' then 'Agosto' when '9' then 'Setiembre' when '10' then 'Octubre'	when '11' then 'Noviembre' when '12' then 'Diciembre'	end, anual, idmes	from mesproceso"
+    # cursor.execute(SQL)
+    # fechas = cursor.fetchall()
+    # data['fechas'] = fechas
+    # print(len(planilla))
+    # if len(planilla)>0:
+    #   data['calculado']="0"
+    # else:
+    #   SQL = "select calculatePlanilla('"+ idfecha + "');"
+    #   cursor.execute(SQL)
+    #   print(idfecha)
+    #   data['calculado'] = '1'
+    #return redirect('/detalle'+idfecha+'a')
+  except Exception as ex:
+    # print(idfecha)
+    # data['calculado'] = '2'
+    raise ValueError(ex)
+  connection.commit()
+  cursor.close()
+  return render_template('index.html')
+
+
+
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
